@@ -1,0 +1,11 @@
+floating_example.png
+
+comes from:
+https://commons.wikimedia.org/wiki/File:Bronchiolar_area_cilia_cross-sections_1.jpg
+https://upload.wikimedia.org/wikipedia/commons/a/a8/Bronchiolar_area_cilia_cross-sections_1.jpg
+By Louisa Howard, Michael Binder [Public domain], via Wikimedia Commons
+
+reference_example.png is a rotated version of the floating_example.png
+
+
+
