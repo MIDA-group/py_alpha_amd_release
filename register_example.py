@@ -50,6 +50,7 @@ from register import Register
 import math
 import sys
 import time
+import os
 
 # Registration Parameters
 alpha_levels = 7
@@ -129,6 +130,11 @@ def main():
     reg.set_gradient_magnitude_threshold(0.001)
     reg.set_sampling_fraction(param_sampling_fraction)
     reg.set_step_lengths(step_lengths)
+
+    # Create output directory
+    directory = os.path.dirname('./test_images/output/')
+    if not os.path.exists(directory):
+        os.makedirs(directory)
 
     # Start the pre-processing
     reg.initialize('./test_images/output/')
