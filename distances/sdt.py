@@ -90,7 +90,7 @@ def det_sdt(A, p, k, m = None, dmax=0, spacing=None, processors=1):
     
     tree = cKDTree(pnts)
     
-    prob = np.array([np.power(p, (i-1)) * (1-p) for i in xrange(1, k+1)])
+    prob = np.array([np.power(p, (i-1)) * (1-p) for i in range(1, k+1)])
     
     subset_size = int((MB_TEMP_SIZE * 1024.0 * 1024.0) / (k*8))
     subsets = int(np.ceil(A.size / float(subset_size)))
@@ -102,7 +102,7 @@ def det_sdt(A, p, k, m = None, dmax=0, spacing=None, processors=1):
     # and subsequent computation of the distances aggregate distances
     # on subsets of the points, which are then written to the result
     # array.
-    for ss_ind in xrange(subsets):
+    for ss_ind in range(subsets):
         start_index = ss_ind * subset_size
         end_index = min(start_index + subset_size, A.size)
         res[start_index:end_index] += _knn_query(tree, G[start_index:end_index, :], k, dmax, prob, processors)
@@ -180,7 +180,7 @@ def det_sdt_multiset_naive(A, p, k, dmax=0, spacing=None):
 
     # If no dmax is specified, use the diameter of the image grid
     if dmax <= 0:
-        dmax = _grid_diameter(A.shape, spacing_vec)#np.sqrt(np.sum([np.power((A.shape[i]*spacing_vec[i])-1, 2.0) for i in xrange(A.ndim)]))
+        dmax = _grid_diameter(A.shape, spacing_vec)#np.sqrt(np.sum([np.power((A.shape[i]*spacing_vec[i])-1, 2.0) for i in range(A.ndim)]))
 
     pnt_tup = np.nonzero(A)
     pnts_multiplicities = A[pnt_tup].astype(dtype='int32')
@@ -192,7 +192,7 @@ def det_sdt_multiset_naive(A, p, k, dmax=0, spacing=None):
     G = np.reshape(_array_grid(A, indexing = 'xy', spacing=spacing), [A.size, A.ndim])
     pnts = point_set_to_multiset(np.transpose(pnt_tup) * (spacing_vec), pnts_multiplicities)
 
-    prob = np.array([np.power(p, (i-1)) * (1-p) for i in xrange(1, k+1)])
+    prob = np.array([np.power(p, (i-1)) * (1-p) for i in range(1, k+1)])
 
     res = np.zeros([A.size])
     for i in range(A.size):
@@ -229,7 +229,7 @@ def _grid_diameter(Sz, spacing=None):
         spacing = np.ones([n])
     assert(spacing.size == n)
 
-    return np.sqrt(np.sum([np.square((Sz[i]-1)*spacing[i]) for i in xrange(n)])).astype('float32')
+    return np.sqrt(np.sum([np.square((Sz[i]-1)*spacing[i]) for i in range(n)])).astype('float32')
 
 def _knn_query(T, pnts, k, dmax, probabilities, processors):
     d,_ = T.query(pnts, k=k, distance_upper_bound=dmax, n_jobs=processors)

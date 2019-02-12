@@ -28,7 +28,7 @@ from sympy.abc import X
 
 def affine_inv_diff(dim):
     A = sympy.Matrix(sympy.symarray('a', (dim+1, dim+1)))
-    for i in xrange(dim):
+    for i in range(dim):
         A[dim,i] = 0
     A[dim,dim] = 1
 
@@ -37,8 +37,8 @@ def affine_inv_diff(dim):
     
     B = sympy.simplify(A.inv())
 
-    M = [sympy.simplify(B.diff(A[i, j])).subs(det, det_symbol) for i in xrange(dim) for j in xrange(dim)]
-    T = [sympy.simplify(B.diff(A[i, dim])).subs(det, det_symbol) for i in xrange(dim)]
+    M = [sympy.simplify(B.diff(A[i, j])).subs(det, det_symbol) for i in range(dim) for j in range(dim)]
+    T = [sympy.simplify(B.diff(A[i, dim])).subs(det, det_symbol) for i in range(dim)]
 
     # Generate code
 
@@ -46,11 +46,11 @@ def affine_inv_diff(dim):
     
     print("    ")
     print("    # Generate local variables for each parameter")
-    for i in xrange(dim):
-        for j in xrange(dim):
+    for i in range(dim):
+        for j in range(dim):
             index = i * dim + j
             print("    a_%d_%d = param[%d]" % (i,j,index))
-    for i in xrange(dim):
+    for i in range(dim):
         index = dim*dim + i
         print("    a_%d_%d = param[%d]" % (i,dim,index))
 
@@ -59,32 +59,32 @@ def affine_inv_diff(dim):
     print("    det = " + str(det))
 
     s = ""
-    for k in xrange(dim * dim):
+    for k in range(dim * dim):
         if k == 0:
             s = s + "["
         else:
             s = s + ", ["
-        for i in xrange(dim):
-            for j in xrange(dim):
+        for i in range(dim):
+            for j in range(dim):
                 x = M[k][i, j]
                 if i == 0 and j == 0:
                     s = s + str(x)
                 else:
                     s = s + ", " + str(x)
-        for i in xrange(dim):
+        for i in range(dim):
             x = M[k][i, dim]
             s = s + ", " + str(x)
         s = s + "]"
-    for k in xrange(dim):
+    for k in range(dim):
         s = s + ", ["
-        for i in xrange(dim):
-            for j in xrange(dim):
+        for i in range(dim):
+            for j in range(dim):
                 x = T[k][i, j]
                 if i == 0 and j == 0:
                     s = s + str(x)
                 else:
                     s = s + ", " + str(x)
-        for i in xrange(dim):
+        for i in range(dim):
             x = T[k][i, dim]
             s = s + ", " + str(x)
         s = s + "]"

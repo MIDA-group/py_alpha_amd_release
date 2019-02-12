@@ -136,7 +136,7 @@ class GradientDescentOptimizer:
     
     def optimize(self, iterations):
         step_length = self.step_length
-        for i in xrange(iterations):
+        for i in range(iterations):
             if self.end_step_length is not None:
                 cur_step_length = step_length + (float(i)/float(iterations)) * (self.end_step_length - step_length)
             else:

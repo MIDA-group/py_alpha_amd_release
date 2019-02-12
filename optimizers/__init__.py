@@ -1,1 +1,1 @@
-from gd_optimizer import GradientDescentOptimizer
+from optimizers.gd_optimizer import GradientDescentOptimizer

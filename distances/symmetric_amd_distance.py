@@ -62,7 +62,7 @@ class SymmetricAMDDistance:
 
         sampled_points = source.random_sample(sampling_count)
         
-        for q in xrange(len(sampled_points)):
+        for q in range(len(sampled_points)):
             sampled_points_q = sampled_points[q]
 
             if sampled_points_q.size == 0:

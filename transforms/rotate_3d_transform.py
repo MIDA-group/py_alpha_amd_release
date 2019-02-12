@@ -5,7 +5,7 @@
 
 import math
 import numpy as np
-from transform_base import TransformBase
+from transforms.transform_base import TransformBase
 
 class Rotate3DTransform(TransformBase):
     def __init__(self):

@@ -1,2 +1,2 @@
-from mask_generators import *
-from noise_generators import *
+from generators.mask_generators import *
+from generators.noise_generators import *

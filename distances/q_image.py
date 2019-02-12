@@ -43,12 +43,12 @@ class QuantizedImage:
             self.im = (1 + np.floor(A * (alpha_levels) - 0.5)).astype('int')
         self.alpha_levels = alpha_levels
         self.contraction_factor = contraction_factor
-        self.distance_shape = tuple([A.shape[i] / contraction_factor for i in range(A.ndim)])
+        self.distance_shape = tuple([int(A.shape[i] / contraction_factor) for i in range(A.ndim)])
         
         self.spacing = spacing
         if remove_zero_weight_pnts == True:
             self.im[weights <= 0.0] = -1
-        #linspaces = [np.linspace(0, A.shape[i]*self.spacing[i], A.shape[i], endpoint=False) for i in xrange(A.ndim)]
+        #linspaces = [np.linspace(0, A.shape[i]*self.spacing[i], A.shape[i], endpoint=False) for i in range(A.ndim)]
         linspaces = [make_space_1d(A.shape[i], contraction_factor, self.spacing[i]) for i in range(A.ndim)]
 
         #self.spacing = self.spacing * contraction_factor
@@ -61,7 +61,7 @@ class QuantizedImage:
 
         grid1 = np.array(np.meshgrid(*linspaces,indexing='ij'))
         grid = np.zeros(A.shape + (A.ndim+1,), dtype = 'float64')
-        for i in xrange(A.ndim):
+        for i in range(A.ndim):
             grid[..., i] = grid1[i, ...] - center_point[i]
         #grid[..., :-1] = grid[..., :-1] - center_point
         grid[..., A.ndim] = weights
@@ -75,7 +75,7 @@ class QuantizedImage:
         all_indices = np.arange(np.prod(A.shape)).reshape(self.get_image_shape())
         self.indices = []#np.arange(np.prod(A.shape[i]))
         self.grid = grid[..., :]
-        for i in xrange(alpha_levels+1):
+        for i in range(alpha_levels+1):
             filt = (self.im == i)
             if remove_zero_weight_pnts:
                 filt[weights <= 0.0] = False
@@ -146,16 +146,8 @@ class QuantizedImage:
         if n == self.point_count:
             return self.pnts
         else:
-            #print(str(n))
             cnt = np.random.multinomial(n, self.freq)
-            #print(str(cnt))
-            #self.random_integers(len(self.pnts[i])-1, cnt[i])
-            return [self.pnts[i][self.random_integers(len(self.pnts[i])-1, cnt[i]), :] for i in xrange(self.alpha_levels+1)]
-            #print(str(cnt))
-            #res = [self.random_from_level(cnt[i], i) for i in xrange(self.alpha_levels+1)]
-            #res_len = [len(a) for a in res]
-            #print(str(res_len))
-            #sys.exit()
+            return [self.pnts[i][self.random_integers(len(self.pnts[i])-1, cnt[i]), :] for i in range(self.alpha_levels+1)]
 
 ### Helper functions ###
 

@@ -24,7 +24,7 @@
 
 import math
 import numpy as np
-from transform_base import TransformBase
+from transforms.transform_base import TransformBase
 
 class CompositeTransform(TransformBase):
     def __init__(self, dim, transforms, active_flags = None):
@@ -38,7 +38,7 @@ class CompositeTransform(TransformBase):
         self.transforms = []
         
         cnt = 0
-        for i in xrange(len(transforms)):
+        for i in range(len(transforms)):
             t = transforms[i]
 
             if active_flags[i] == True:
@@ -159,7 +159,7 @@ class CompositeTransform(TransformBase):
         inv_transforms = []
 
         tlen = len(self.transforms)
-        for i in xrange(tlen):
+        for i in range(tlen):
             inv_transforms.append(self.transforms[(tlen-1)-i].invert())
 
         return CompositeTransform(self.get_dim(), inv_transforms, np.flip(self.active_flags, 0))

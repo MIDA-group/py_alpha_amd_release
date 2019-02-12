@@ -51,7 +51,7 @@ import filters
 import math
 import sys
 import time
-import cProfile, pstats, StringIO
+import cProfile, pstats
 
 class Register:
     def __init__(self, dim):
@@ -118,7 +118,7 @@ class Register:
         self.pyramid_sigmas.append(sigma)
     
     def add_pyramid_levels(self, factors, sigmas):
-        for i in xrange(len(factors)):
+        for i in range(len(factors)):
             self.add_pyramid_level(factors[i], sigmas[i])
 
     def get_pyramid_level_count(self):
@@ -181,7 +181,7 @@ class Register:
 
         pyramid_levels = len(self.pyramid_factors)
 
-        for i in xrange(pyramid_levels):
+        for i in range(pyramid_levels):
             factor = self.pyramid_factors[i]
 
             ref_resampled = filters.downsample(filters.gaussian_filter(self.ref_im, self.pyramid_sigmas[i]), factor)
@@ -238,13 +238,13 @@ class Register:
         pyramid_level_count = len(self.pyramid_factors)
         transform_count = len(self.initial_transforms)
 
-        for t_it in xrange(transform_count):
+        for t_it in range(transform_count):
             init_transform = self.initial_transforms[t_it]
             param_scaling = self.transforms_param_scaling[t_it]
 
             self.value_history.append([])
 
-            for lvl_it in xrange(pyramid_level_count):
+            for lvl_it in range(pyramid_level_count):
              
                 opt = GradientDescentOptimizer(self.distances[lvl_it], init_transform.copy())
 

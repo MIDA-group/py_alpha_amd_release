@@ -35,7 +35,7 @@ def image_center_point(image, spacing):
         return ((np.array(shape)-1) * spacing) * 0.5
 
 def move_axis_first_to_last(image):
-    ax = [i for i in xrange(1, image.ndim)] + [0]
+    ax = [i for i in range(1, image.ndim)] + [0]
     return np.transpose(image, np.array(ax))
     #np.arange(1, image.ndim)
 
@@ -43,7 +43,7 @@ def make_image_grid(image, spacing):
     if spacing is None:
         spacing = np.ones((image.ndim,))
     
-    linspaces = [np.linspace(0, image.shape[i]*spacing[i], image.shape[i], endpoint=False) for i in xrange(image.ndim)]
+    linspaces = [np.linspace(0, image.shape[i]*spacing[i], image.shape[i], endpoint=False) for i in range(image.ndim)]
     grid = np.array(np.meshgrid(*linspaces, indexing='ij'))
 
     return grid

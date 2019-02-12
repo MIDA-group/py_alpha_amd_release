@@ -24,9 +24,9 @@
 
 import numpy as np
 
-from transform_base import TransformBase
-from translation_transform import TranslationTransform
-from composite_transform import CompositeTransform
+from transforms.transform_base import TransformBase
+from transforms.translation_transform import TranslationTransform
+from transforms.composite_transform import CompositeTransform
 
 def image_center_point(image, spacing = None):
     shape = image.shape

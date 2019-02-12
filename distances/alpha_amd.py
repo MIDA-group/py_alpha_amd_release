@@ -28,7 +28,7 @@ import sys
 import scipy.ndimage
 import scipy.ndimage.morphology as morph
 import scipy.interpolate as interpolate
-import q_image
+import distances.q_image
 
 def edt(A, spacing):
     return morph.distance_transform_edt(np.invert(A), spacing)
@@ -61,7 +61,7 @@ def alpha_distance_transform(qimage, alpha_levels, dshape, spacing, mask = None,
     d = np.zeros(dshape, dtype = 'float32')
 
     # Construct the alpha gradient and distance transform
-    for i in xrange(1, ex_alpha_levels):
+    for i in range(1, ex_alpha_levels):
         b = (qimage >= i)
         #assert(np.any(b))
         #assert(np.any(np.invert(b)))
@@ -85,7 +85,7 @@ def alpha_distance_transform(qimage, alpha_levels, dshape, spacing, mask = None,
 
         # Write each gradient component into level image (with zeroing of
         # gradients for object points).
-        for k in xrange(dim):
+        for k in range(dim):
             if mask_out_edges == True:
                 level[..., k] = grad_im[k] * b_comp_float
             else:
@@ -107,7 +107,7 @@ def alpha_distance_transform(qimage, alpha_levels, dshape, spacing, mask = None,
 def alpha_distance_transform_bd(q, alpha_levels, dshape, spacing, mask=None, dmax=0.0, dt_fun=edt, mask_out_edges=True):
     dg_tf1 = alpha_distance_transform(q.get_image(), alpha_levels, dshape, spacing, mask, dmax, dt_fun, mask_out_edges)
     dg_tf2 = alpha_distance_transform(alpha_levels - q.get_image(), alpha_levels, dshape, spacing, mask, dmax, dt_fun, mask_out_edges)
-    for i in xrange(alpha_levels+1):
+    for i in range(alpha_levels+1):
         dg_tf1[i][:] = dg_tf1[i][:] + dg_tf2[alpha_levels-i][:]
     return dg_tf1
 
@@ -118,7 +118,7 @@ def interp_vec(A, p, order=1):
     results = np.zeros((p.shape[1], d), dtype='float64')
     c = np.zeros((1,), dtype = A.dtype)
 
-    for k in xrange(d):
+    for k in range(d):
         scipy.ndimage.interpolation.map_coordinates(A[..., k], coordinates=p, output = results[..., k], order = order, cval = c, prefilter = False)
 
     return results
@@ -168,7 +168,7 @@ class AlphaAMD:
 
         #evaluated_pnts = np.transpose(evaluated_pnts)
         #evaluated_pnts[..., :] = evaluated_pnts[..., :] * evaluated_mask[..., :]
-        for i in xrange(evaluated_pnts.shape[1]):
+        for i in range(evaluated_pnts.shape[1]):
             eval_i = evaluated_pnts[..., i]
             eval_mask = evaluated_mask.reshape([evaluated_mask.size])
             evaluated_pnts[..., i] = eval_i * eval_mask
@@ -181,7 +181,7 @@ class AlphaAMD:
 if __name__ == '__main__':
     alpha_levels = 1
     im = np.zeros((3, 4))
-    print im.ndim
+    print(im.ndim)
     im[0, 1] = 1.0
     im[0, 2] = 1.0
     spacing = [2, 3]

@@ -24,7 +24,7 @@
 
 import math
 import numpy as np
-from transform_base import TransformBase
+from transforms.transform_base import TransformBase
 
 # Format, in homogeneous coordinates
 # | a00 ... a0n t0 | |x1|
@@ -113,11 +113,11 @@ class AffineTransform(TransformBase):
     def grad(self, pnts, gradients, output_gradients):
         g_out = np.zeros((self.get_param_count(),))
 
-        for i in xrange(self.dim):
-            for j in xrange(self.dim):
+        for i in range(self.dim):
+            for j in range(self.dim):
                 g_out[i*self.dim + j] = (pnts[:, j] * gradients[:, i]).sum()
-        #for i in xrange(self.dim):
-        #    for j in xrange(self.dim):
+        #for i in range(self.dim):
+        #    for j in range(self.dim):
         #        g_out[i*self.dim:(i+1)*self.dim] = (pnts[:, j] * gradients[:, i]).sum()
         g_out[(self.dim*self.dim):] = gradients.sum(axis=0)
 

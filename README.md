@@ -1,5 +1,5 @@
 # Project: py_alpha_amd
-Python 2.7/NumPy/SciPy implementation of a registration framework using the Alpha AMD similarity measure, which combines intensity and spatial information. (Ref: https://arxiv.org/abs/1807.11599)
+Python/NumPy/SciPy implementation of a registration framework using the Alpha AMD similarity measure, which combines intensity and spatial information. (Ref: https://arxiv.org/abs/1807.11599)
 
 The Alpha AMD similarity measure typically exhibits few local optima in the transformation parameter search space, compared to other commonly used measures, which makes the registration substantially more robust/less sensitive to the starting position, when used in a local search framework.
 

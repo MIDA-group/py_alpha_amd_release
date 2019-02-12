@@ -75,7 +75,7 @@ class TransformBase:
         raise NotImplementedError
 
     def warp(self, In, Out, in_spacing=None, out_spacing=None, mode='spline', bg_value=0.0):
-        linspaces = [np.linspace(0, Out.shape[i]*out_spacing[i], Out.shape[i], endpoint=False) for i in xrange(Out.ndim)]
+        linspaces = [np.linspace(0, Out.shape[i]*out_spacing[i], Out.shape[i], endpoint=False) for i in range(Out.ndim)]
 
         grid = np.array(np.meshgrid(*linspaces,indexing='ij'))
 
@@ -142,7 +142,7 @@ class TransformBase:
             d = self.diff(0, pnts, eps)
             res[0] = res[0] + (d * gradients).sum()
         else:
-            for i in xrange(self.get_param_count()):
+            for i in range(self.get_param_count()):
                 d = self.diff(i, pnts, eps)
                 summed = (d * gradients).sum()
                 res[i] = res[i] + summed
@@ -159,7 +159,7 @@ class TransformBase:
 
     def inverse_to_forward_matrix_num(self, eps=1e-6):
         D = np.zeros((self.get_param_count(),self.get_param_count()))
-        for i in xrange(self.get_param_count()):
+        for i in range(self.get_param_count()):
             d = self.diff_inv(i, eps)
             D[i, :] = d
         return D
@@ -172,7 +172,7 @@ class TransformBase:
         #print(G)
         return G
         #res = np.zeros((self.get_param_count(),))
-        #for i in xrange(self.get_param_count()):
+        #for i in range(self.get_param_count()):
         #    d = self.diff_inv(i, eps)
         #    print("d(%d): %s" % (i, str(d)))
         #    res[i] = (d.dot(inv_grad))#.sum()
