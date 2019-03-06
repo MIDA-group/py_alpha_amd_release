@@ -42,6 +42,7 @@ from distances import symmetric_amd_distance
 
 # Import optimizers
 from optimizers import GradientDescentOptimizer
+from optimizers import AdamOptimizer
 
 # Import generators and filters
 import generators
@@ -245,8 +246,8 @@ class Register:
             self.value_history.append([])
 
             for lvl_it in range(pyramid_level_count):
-             
-                opt = GradientDescentOptimizer(self.distances[lvl_it], init_transform.copy())
+                #opt = GradientDescentOptimizer(self.distances[lvl_it], init_transform.copy())
+                opt = AdamOptimizer(self.distances[lvl_it], init_transform.copy())
 
                 if self.step_lengths.ndim == 1:
                     opt.set_step_length(self.step_lengths[0], self.step_lengths[1])
@@ -276,7 +277,3 @@ class Register:
                     init_transform = opt.get_transform()
 
                 self.value_history[-1].append(opt.get_value_history())
-
-   
-        
-        

@@ -62,9 +62,9 @@ symmetric_measure = True
 squared_measure = False
 
 # The number of iterations
-param_iterations = 3000
+param_iterations = 100
 # The fraction of the points to sample randomly (0.0-1.0)
-param_sampling_fraction = 0.1
+param_sampling_fraction = 0.3
 # Number of iterations between each printed output (with current distance/gradient/parameters)
 param_report_freq = 50
 
@@ -117,7 +117,7 @@ def main():
     reg.add_pyramid_level(1, 0.0)
 
     # Learning-rate / Step lengths [[start1, end1], [start2, end2] ...] (for each pyramid level)
-    step_lengths = np.array([[1.0 ,1.0], [1.0, 0.5], [0.5, 0.1]])
+    step_lengths = np.array([[1., 1.], [1., 1.], [1., 1e-2]])
 
     # Create the transform and add it to the registration framework (switch between affine/rigid transforms by commenting/uncommenting)
     # Affine
