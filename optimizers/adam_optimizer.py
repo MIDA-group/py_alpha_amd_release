@@ -59,10 +59,10 @@ class AdamOptimizer:
     def set_adam_beta1(self, beta1):
         self.adam_beta1 = beta1
 
-    def set_adam_beta2(self, beta1):
+    def set_adam_beta2(self, beta2):
         self.adam_beta2 = beta2
 
-    def set_adam_eps(self, beta1):
+    def set_adam_eps(self, eps):
         self.adam_eps = eps
 
     def set_gradient_magnitude_threshold(self, gmt):
