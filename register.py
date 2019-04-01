@@ -63,6 +63,8 @@ class Register:
         self.alpha_levels = 7
         self.gradient_magnitude_threshold = 0.00001
         
+        self.opt_name = 'adam'
+
         self.ref_im = None
         self.flo_im = None
         self.ref_mask = None
@@ -82,7 +84,7 @@ class Register:
         self.pyramid_sigmas = []
 
         self.distances = []
-        
+
         # Reporting/Output
         self.report_func = None
         self.report_freq = 25
@@ -137,6 +139,12 @@ class Register:
     def set_step_lengths(self, step_lengths):
         self.step_lengths = np.array(step_lengths)#np.array([start_step_length, end_step_length])
     
+    def set_optimizer(self, opt_name):
+        if opt_name == 'adam' or opt_name == 'sgd':
+            self.opt_name = opt_name
+        else:
+            raise ValueError('Optimizer name must be \'adam\' or \'sgd\'')
+
     def set_reference_image(self, image, spacing = None):
         self.ref_im = image
         if spacing is None:
@@ -246,8 +254,12 @@ class Register:
             self.value_history.append([])
 
             for lvl_it in range(pyramid_level_count):
-                #opt = GradientDescentOptimizer(self.distances[lvl_it], init_transform.copy())
-                opt = AdamOptimizer(self.distances[lvl_it], init_transform.copy())
+                if self.opt_name == 'adam':
+                    opt = AdamOptimizer(self.distances[lvl_it], init_transform.copy())
+                elif self.opt_name == 'sgd':
+                    opt = GradientDescentOptimizer(self.distances[lvl_it], init_transform.copy())
+                else:
+                    raise ValueError('Optimizer name must be \'adam\' or \'sgd\'')
 
                 if self.step_lengths.ndim == 1:
                     opt.set_step_length(self.step_lengths[0], self.step_lengths[1])

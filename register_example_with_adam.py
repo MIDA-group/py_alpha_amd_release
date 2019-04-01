@@ -62,11 +62,11 @@ symmetric_measure = True
 squared_measure = False
 
 # The number of iterations
-param_iterations = 500
+param_iterations = 100
 # The fraction of the points to sample randomly (0.0-1.0)
 param_sampling_fraction = 0.1
 # Number of iterations between each printed output (with current distance/gradient/parameters)
-param_report_freq = 50
+param_report_freq = 100
 
 def main():
     np.random.seed(1000)
@@ -117,11 +117,12 @@ def main():
     reg.add_pyramid_level(1, 0.0)
 
     # Learning-rate / Step lengths [[start1, end1], [start2, end2] ...] (for each pyramid level)
-    step_lengths = np.array([[1., 1.], [1., 0.5], [0.5, 0.1]])
+    step_lengths = np.array([[1., 1.], [1., 1.], [1., 1e-1]]) * 1e-1
 
     # Create the transform and add it to the registration framework (switch between affine/rigid transforms by commenting/uncommenting)
     # Affine
-    reg.add_initial_transform(AffineTransform(2), np.array([1.0/diag, 1.0/diag, 1.0/diag, 1.0/diag, 1.0, 1.0]))
+    #1.0/diag, 1.0/diag, 1.0/diag, 1.0/diag, 1.0, 1.0
+    reg.add_initial_transform(AffineTransform(2), np.array([1.0, 1.0, 1.0, 1.0, 1.0, 1.0]))
     # Rigid 2D
     #reg.add_initial_transform(Rigid2DTransform(2), np.array([1.0/diag, 1.0, 1.0]))
 
@@ -130,7 +131,7 @@ def main():
     reg.set_gradient_magnitude_threshold(0.001)
     reg.set_sampling_fraction(param_sampling_fraction)
     reg.set_step_lengths(step_lengths)
-    reg.set_optimizer('sgd')
+    reg.set_optimizer('adam')
 
     # Create output directory
     directory = os.path.dirname('./test_images/output/')
